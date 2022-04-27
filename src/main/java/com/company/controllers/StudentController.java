@@ -78,4 +78,74 @@ public class StudentController {
         }
     }
 
+    public static void editStudent() {
+        // Prompt the user to enter the id of the student they want
+        // to retrieve
+        System.out.print("Enter the id of the student: ");
+        int id = scanner.nextInt();
+
+        System.out.print("What field would you like to edit? (name, age) : ");
+        String fieldToEdit = scanner.next();
+
+        System.out.print("What value do you want to edit it to?: ");
+        String update = scanner.next();
+
+        try {
+            ps = getConnection().prepareStatement("UPDATE students SET " + fieldToEdit + " = '" + update + "' WHERE id=" + id);
+            ps.execute();
+            System.out.println("Successfully updated student data");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteStudent() {
+        // Prompt the user to enter the id of the student they want
+        // to retrieve
+        System.out.print("Enter the id of the student: ");
+        int id = scanner.nextInt();
+
+        try {
+            ps = getConnection().prepareStatement("DELETE FROM students WHERE id=" + id);
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean addStudentScores() {
+        // Prompt the user for data
+        System.out.print("Enter the id of the student: ");
+        int id = scanner.nextInt();
+
+        System.out.print("Enter the mathematics score of the student: ");
+        int maths = scanner.nextInt();
+
+        System.out.print("Enter the english score of the student: ");
+        int english = scanner.nextInt();
+
+        System.out.print("Enter the physics score of the student: ");
+        int physics = scanner.nextInt();
+
+        System.out.print("Enter the chemistry score of the student: ");
+        int chem = scanner.nextInt();
+
+        try {
+            // INSERT INTO students(studentid, mathematics, english, physics, chemistry) VALUES(studentid, maths, english, physics, chem);
+            ps = getConnection().prepareStatement("INSERT INTO scores(studentid, mathematics, english, physics, chemistry) " +
+                    "VALUES(" + id + ", " + maths + ", " + english + ", " + physics + ", " + chem + ")");
+
+            ps.execute(); // execute the sql command
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Database Error");
+            return false;
+
+        }
+    }
+
+
+
 }
