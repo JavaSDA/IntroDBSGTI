@@ -106,8 +106,12 @@ public class StudentController {
         int id = scanner.nextInt();
 
         try {
+            // Because of the relationship with the scores table, we have to first delete the
+            // students score before we delete the student's data.
+            deleteScore(id);
             ps = getConnection().prepareStatement("DELETE FROM students WHERE id=" + id);
             ps.execute();
+            System.out.println("Deleted Student and related scores successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -143,6 +147,52 @@ public class StudentController {
             System.out.println("Database Error");
             return false;
 
+        }
+    }
+
+    public static void editScore() {
+        // Prompt the user to enter the id of the student they want
+        // to retrieve
+        System.out.print("Enter the id of the student: ");
+        int id = scanner.nextInt();
+
+        System.out.print("What field would you like to edit? (mathematics, english, physics, chemistry) : ");
+        String fieldToEdit = scanner.next();
+
+        System.out.print("What value do you want to edit it to?: ");
+        int update = scanner.nextInt();
+
+        try {
+            ps = getConnection().prepareStatement("UPDATE scores SET " + fieldToEdit + " = " + update + " WHERE id=" + id);
+            ps.execute();
+            System.out.println("Successfully updated student data");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteScore() {
+        // Prompt the user to enter the id of the student they want
+        // to retrieve
+        System.out.print("Enter the id of the student: ");
+        int id = scanner.nextInt();
+
+        try {
+            ps = getConnection().prepareStatement("DELETE FROM scores WHERE studentid=" + id);
+            ps.execute();
+            System.out.println("Successfully deleted student scores");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteScore(int id) {
+        try {
+            ps = getConnection().prepareStatement("DELETE FROM scores WHERE studentid=" + id);
+            ps.execute();
+            System.out.println("Succesfully deleted student scores");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

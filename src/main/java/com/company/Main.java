@@ -3,6 +3,7 @@ package com.company;
 
 import com.company.books.Book;
 import com.company.dbhelper.DbConnection;
+import com.company.login.Auth;
 import com.company.menu.StudentMenu;
 
 import java.util.ArrayList;
@@ -13,7 +14,12 @@ public class Main {
     public static void main(String[] args) {
         // CRUD - Create, Read, Update and Delete
 
-        StudentMenu.menu();
+//        StudentMenu.menu();
+        if (Auth.signUp()) {
+            StudentMenu.menu();
+        } else {
+            System.out.println("Invalid login credentials");
+        }
 
     }
 

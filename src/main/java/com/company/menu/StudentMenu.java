@@ -15,6 +15,8 @@ public class StudentMenu {
         System.out.println("3. Edit student by id");
         System.out.println("4. Delete student by id");
         System.out.println("5. Add student score");
+        System.out.println("6. Edit student score");
+        System.out.println("7. Delete student score");
 
 
         System.out.print("Select an option: ");
@@ -35,6 +37,12 @@ public class StudentMenu {
                 break;
             case 5:
                 System.out.println(StudentController.addStudentScores() ? "Successfully added Student scores" : "Student scores not added");
+                break;
+            case 6:
+                StudentController.editScore();
+                break;
+            case 7:
+                StudentController.deleteScore();
                 break;
 
             default:
